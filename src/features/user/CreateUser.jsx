@@ -1,10 +1,16 @@
-import { useState } from "react";
-import Button from "../../ui/Button";
+import Button from '../../ui/Button';
+import { useDispatch } from 'react-redux';
+import { updateName } from '../user/userSlice';
+import { useState } from 'react';
+
 function CreateUser() {
-  const [username, setUsername] = useState("");
+  const [userName, setUserName] = useState('');
+  const dispatch = useDispatch();
 
   function handleSubmit(e) {
     e.preventDefault();
+    if (userName.length > 15) return;
+    dispatch(updateName(userName));
   }
 
   return (
@@ -16,12 +22,12 @@ function CreateUser() {
       <input
         className="input mb-8 w-72"
         type="text"
-        placeholder="Your full name"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
+        placeholder="Your full name <= 15 characters"
+        value={userName}
+        onChange={e => setUserName(e.target.value)}
       />
 
-      {username !== "" && (
+      {userName !== '' && (
         <div>
           <Button type="primary">Start ordering</Button>
         </div>
