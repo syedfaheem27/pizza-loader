@@ -2,15 +2,18 @@ import Button from '../../ui/Button';
 import { useDispatch } from 'react-redux';
 import { updateName } from '../user/userSlice';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function CreateUser() {
   const [userName, setUserName] = useState('');
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   function handleSubmit(e) {
     e.preventDefault();
-    if (userName.length > 15) return;
+    if (!userName) return;
     dispatch(updateName(userName));
+    navigate('/menu');
   }
 
   return (
@@ -22,7 +25,7 @@ function CreateUser() {
       <input
         className="input mb-8 w-72"
         type="text"
-        placeholder="Your full name <= 15 characters"
+        placeholder="Your full name "
         value={userName}
         onChange={e => setUserName(e.target.value)}
       />
